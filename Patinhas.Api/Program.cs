@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Patinhas.Api.Dados;
 using Patinhas.Api.Seguranca;
+using Patinhas.Api.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,7 @@ builder.Services.AddCors(opcoes => opcoes.AddPolicy("Front", politica => politic
 // ---------- Erros, controllers, health ----------
 builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IAuthServico, AuthServico>();
 builder.Services.AddHealthChecks().AddDbContextCheck<PatinhasDbContext>();
 
 // ---------- Swagger (Swashbuckle 10 / OpenAPI.NET 2.x) ----------

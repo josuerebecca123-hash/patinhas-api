@@ -5,11 +5,12 @@ public enum TipoErro
     Validacao,
     NaoEncontrado,
     Proibido,
-    Conflito
+    Conflito,
+    NaoAutenticado
 }
 
 // Resultado de uma operação de serviço, sem throw para erro de negócio.
-// O controller traduz: Validacao -> 400, NaoEncontrado -> 404, Proibido -> 403, Conflito -> 409.
+// O controller traduz: Validacao -> 400, NaoAutenticado -> 401, Proibido -> 403, NaoEncontrado -> 404, Conflito -> 409.
 public class Resultado
 {
     public bool Sucesso { get; }
