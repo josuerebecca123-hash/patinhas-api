@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Patinhas.Api/Patinhas.Api.csproj" />
+  <Project Path="Patinhas.Testes/Patinhas.Testes.csproj" />
+</Solution>
