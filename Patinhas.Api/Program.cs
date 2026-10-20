@@ -59,6 +59,7 @@ builder.Services.AddCors(opcoes => opcoes.AddPolicy("Front", politica => politic
 builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthServico, AuthServico>();
+builder.Services.AddScoped<ICatalogoServicos, CatalogoServicos>();
 builder.Services.AddHealthChecks().AddDbContextCheck<PatinhasDbContext>();
 
 // ---------- Swagger (Swashbuckle 10 / OpenAPI.NET 2.x) ----------
