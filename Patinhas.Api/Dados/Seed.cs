@@ -37,6 +37,30 @@ public static class Seed
         }
 
         await db.SaveChangesAsync();
+
+        await GarantirAgendamentosAsync(db, logger);
+    }
+
+    private static async Task GarantirAgendamentosAsync(PatinhasDbContext db, ILogger logger)
+    {
+        if (await db.Agendamentos.AnyAsync())
+            return;
+
+        var marina = await db.Usuarios.FirstOrDefaultAsync(u => u.Email == "marina.souza@exemplo.com");
+        var carlos = await db.Usuarios.FirstOrDefaultAsync(u => u.Email == "carlos.lima@exemplo.com");
+        var servicos = await db.Servicos.OrderBy(s => s.Id).Take(2).ToListAsync();
+
+        // Se alguém apagou os dados de exemplo, não há o que semear (e a API não pode cair por isso).
+        if (marina is null || carlos is null || servicos.Count < 2)
+            return;
+
+        // Um agendamento por cliente, daqui a uma semana (horários em UTC).
+        var base7Dias = DateTime.UtcNow.Date.AddDays(7);
+        db.Agendamentos.Add(new Agendamento(servicos[0].Id, marina.Id, "Thor", base7Dias.AddHours(13)));
+        db.Agendamentos.Add(new Agendamento(servicos[1].Id, carlos.Id, "Mel", base7Dias.AddHours(14)));
+        await db.SaveChangesAsync();
+
+        logger.LogInformation("Seed: {Quantidade} agendamentos de exemplo criados", 2);
     }
 
     private static async Task GarantirUsuarioAsync(
