@@ -60,6 +60,8 @@ builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthServico, AuthServico>();
 builder.Services.AddScoped<ICatalogoServicos, CatalogoServicos>();
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped<IAgendamentoServico, AgendamentoServico>();
 builder.Services.AddHealthChecks().AddDbContextCheck<PatinhasDbContext>();
 
 // ---------- Swagger (Swashbuckle 10 / OpenAPI.NET 2.x) ----------
