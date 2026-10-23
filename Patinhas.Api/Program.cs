@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Patinhas.Api.Dados;
+using Patinhas.Api.Dtos;
 using Patinhas.Api.Seguranca;
 using Patinhas.Api.Servicos;
 
@@ -112,11 +113,11 @@ app.UseAuthorization();
 
 app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 app.MapHealthChecks("/health");
-app.MapGet("/api/versao", () => new
-{
-    commit = Environment.GetEnvironmentVariable("RENDER_GIT_COMMIT") ?? "local",
-    ambiente = app.Environment.EnvironmentName
-}).WithTags("Sistema");
+app.MapGet("/api/versao", () => new VersaoDto(
+        Environment.GetEnvironmentVariable("RENDER_GIT_COMMIT") ?? "local",
+        app.Environment.EnvironmentName))
+    .WithTags("Sistema")
+    .Produces<VersaoDto>(StatusCodes.Status200OK);
 app.MapControllers();
 
 app.Run();
