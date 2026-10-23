@@ -1,0 +1,228 @@
+# Requisições da Patinhas API para o REST Client do VS Code (extensão "REST Client").
+# Como usar: clique em "Send Request" acima de cada bloco, de cima para baixo.
+# Os tokens e os ids são capturados automaticamente das respostas anteriores.
+# Para a demonstração, troque a @url pela URL da Render (linha comentada abaixo).
+
+@url = http://localhost:5138
+# @url = https://patinhas-api-dzmy.onrender.com
+
+# Senha de TESTE do admin (a mesma de Seed__AdminSenha, listada no README). Conta fictícia.
+@senhaAdmin = COLE_AQUI_A_SENHA_DE_TESTE_DO_ADMIN
+
+# Tokens vindos dos logins mais abaixo (rode os três logins antes dos blocos protegidos).
+@tokenAdmin = {{loginAdmin.response.body.$.token}}
+@tokenMarina = {{loginMarina.response.body.$.token}}
+@tokenCarlos = {{loginCarlos.response.body.$.token}}
+
+# Datas FUTURAS (a API recusa datas passadas com 400). Se estas já passaram, troque o ano.
+# Convenção deste arquivo: serviço 2 = "Banho porte médio" (60 min). Confira em GET /api/servicos.
+
+
+### ============================ SISTEMA ============================
+
+### Saúde (200 Healthy)
+GET {{url}}/health
+
+### Versão: na Render mostra o hash do último commit; local mostra "local"
+GET {{url}}/api/versao
+
+
+### ======================= SERVIÇOS (público) ======================
+
+### Listagem paginada: 200 com itens, pagina, tamanho, total e totalPaginas
+GET {{url}}/api/servicos?pagina=1&tamanho=5
+
+### Busca que encontra algo
+GET {{url}}/api/servicos?busca=banho&pagina=1&tamanho=5
+
+### Busca sem resultado: 200 com lista vazia e total 0 (não é 404)
+GET {{url}}/api/servicos?busca=zzzz
+
+### Detalhe por id: 200
+GET {{url}}/api/servicos/1
+
+### Detalhe de id inexistente: 404 em ProblemDetails
+GET {{url}}/api/servicos/9999
+
+
+### ============================ CADASTRO ===========================
+
+### Registro com e-mail novo: 201 (sempre cria "cliente")
+POST {{url}}/api/auth/registro
+Content-Type: application/json
+
+{ "email": "teste-{{$guid}}@exemplo.com", "senha": "Senha@123" }
+
+### Registro com e-mail repetido: 409
+POST {{url}}/api/auth/registro
+Content-Type: application/json
+
+{ "email": "marina.souza@exemplo.com", "senha": "Senha@123" }
+
+### Registro com senha curta: 400 (lista os campos errados)
+POST {{url}}/api/auth/registro
+Content-Type: application/json
+
+{ "email": "alguem@exemplo.com", "senha": "curta" }
+
+
+### ============================== LOGIN ============================
+
+### Login do admin: 200 com token e papel "admin"
+# @name loginAdmin
+POST {{url}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "admin@patinhas.com.br", "senha": "{{senhaAdmin}}" }
+
+### Login da Marina (cliente): 200
+# @name loginMarina
+POST {{url}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "marina.souza@exemplo.com", "senha": "Patinhas@123" }
+
+### Login do Carlos (cliente): 200
+# @name loginCarlos
+POST {{url}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "carlos.lima@exemplo.com", "senha": "Patinhas@123" }
+
+### Senha errada: 401
+POST {{url}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "marina.souza@exemplo.com", "senha": "senha-errada" }
+
+
+### ============ SERVIÇOS (escrita: somente admin) ==================
+
+### Sem token: 401
+POST {{url}}/api/servicos
+Content-Type: application/json
+
+{ "nome": "Relaxamento", "descricao": "Alisamento leve.", "preco": 90, "duracaoMinutos": 60 }
+
+### Cliente tentando criar serviço: 403
+POST {{url}}/api/servicos
+Authorization: Bearer {{tokenMarina}}
+Content-Type: application/json
+
+{ "nome": "Relaxamento", "descricao": "Alisamento leve.", "preco": 90, "duracaoMinutos": 60 }
+
+### Admin cria: 201 com o cabeçalho Location
+# @name criarServico
+POST {{url}}/api/servicos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "nome": "Relaxamento", "descricao": "Alisamento leve.", "preco": 90, "duracaoMinutos": 60 }
+
+### Corpo inválido: 400 com os campos errados
+POST {{url}}/api/servicos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "nome": "", "preco": -1, "duracaoMinutos": 2 }
+
+### Admin edita o serviço criado acima: 200
+PUT {{url}}/api/servicos/{{criarServico.response.body.$.id}}
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "nome": "Relaxamento premium", "descricao": "Alisamento leve com hidratação.", "preco": 120, "duracaoMinutos": 75, "ativo": true }
+
+### Admin exclui o serviço criado acima: 204
+DELETE {{url}}/api/servicos/{{criarServico.response.body.$.id}}
+Authorization: Bearer {{tokenAdmin}}
+
+### Excluir de novo: 404
+DELETE {{url}}/api/servicos/{{criarServico.response.body.$.id}}
+Authorization: Bearer {{tokenAdmin}}
+
+### Excluir serviço que já tem agendamento (o do seed): 409 em ProblemDetails
+DELETE {{url}}/api/servicos/1
+Authorization: Bearer {{tokenAdmin}}
+
+
+### ======================== AGENDAMENTOS ===========================
+
+### Sem token: 401
+GET {{url}}/api/agendamentos
+
+### Marina lista: 200, só os dela
+GET {{url}}/api/agendamentos?pagina=1&tamanho=10
+Authorization: Bearer {{tokenMarina}}
+
+### Marina agenda o serviço 2 às 14:00 (UTC-3): 201 com Location
+# @name agendamentoMarina
+POST {{url}}/api/agendamentos
+Authorization: Bearer {{tokenMarina}}
+Content-Type: application/json
+
+{ "servicoId": 2, "nomeDoPet": "Bolt", "dataHora": "2027-03-10T14:00:00-03:00" }
+
+### Carlos tenta o MESMO horário: 409 (regra de negócio)
+POST {{url}}/api/agendamentos
+Authorization: Bearer {{tokenCarlos}}
+Content-Type: application/json
+
+{ "servicoId": 2, "nomeDoPet": "Mel", "dataHora": "2027-03-10T14:00:00-03:00" }
+
+### Carlos tenta 14:30, que se sobrepõe ao banho de 60 min: 409
+POST {{url}}/api/agendamentos
+Authorization: Bearer {{tokenCarlos}}
+Content-Type: application/json
+
+{ "servicoId": 2, "nomeDoPet": "Mel", "dataHora": "2027-03-10T14:30:00-03:00" }
+
+### Carlos agenda 15:00 (encosta no fim do outro, não sobrepõe): 201
+# @name agendamentoCarlos
+POST {{url}}/api/agendamentos
+Authorization: Bearer {{tokenCarlos}}
+Content-Type: application/json
+
+{ "servicoId": 2, "nomeDoPet": "Mel", "dataHora": "2027-03-10T15:00:00-03:00" }
+
+### Dados inválidos: 400
+POST {{url}}/api/agendamentos
+Authorization: Bearer {{tokenCarlos}}
+Content-Type: application/json
+
+{ "servicoId": 0, "nomeDoPet": "" }
+
+### Data no passado: 400
+POST {{url}}/api/agendamentos
+Authorization: Bearer {{tokenCarlos}}
+Content-Type: application/json
+
+{ "servicoId": 2, "nomeDoPet": "Mel", "dataHora": "2020-01-01T10:00:00-03:00" }
+
+### IDOR: Carlos tenta VER o agendamento da Marina: 403
+GET {{url}}/api/agendamentos/{{agendamentoMarina.response.body.$.id}}
+Authorization: Bearer {{tokenCarlos}}
+
+### IDOR: Carlos tenta CANCELAR o agendamento da Marina: 403
+POST {{url}}/api/agendamentos/{{agendamentoMarina.response.body.$.id}}/cancelar
+Authorization: Bearer {{tokenCarlos}}
+
+### Id inexistente: 404
+GET {{url}}/api/agendamentos/999999
+Authorization: Bearer {{tokenMarina}}
+
+### Admin lista todos (de todos os clientes): 200
+GET {{url}}/api/agendamentos?pagina=1&tamanho=10
+Authorization: Bearer {{tokenAdmin}}
+
+### Marina cancela o dela: 200 com status "Cancelado" (libera o horário)
+POST {{url}}/api/agendamentos/{{agendamentoMarina.response.body.$.id}}/cancelar
+Authorization: Bearer {{tokenMarina}}
+
+### Cancelar de novo: 409
+POST {{url}}/api/agendamentos/{{agendamentoMarina.response.body.$.id}}/cancelar
+Authorization: Bearer {{tokenMarina}}
+
+### Carlos cancela o dele (deixa o arquivo repetível): 200
+POST {{url}}/api/agendamentos/{{agendamentoCarlos.response.body.$.id}}/cancelar
+Authorization: Bearer {{tokenCarlos}}
