@@ -1,0 +1,104 @@
+/* src/paginas/Agenda.css
+   Só variáveis do index.css. A classe .paginacao vem do Vitrine.css. */
+
+.agenda {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.agenda > * {
+  min-width: 0;
+}
+
+@media (min-width: 880px) {
+  .agenda {
+    grid-template-columns: 22rem 1fr;
+  }
+
+  .agenda__form {
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+.agenda__status:not(:empty) {
+  margin-bottom: 1rem;
+}
+
+.agenda__status p,
+.agenda__form .alerta p,
+.agenda__aviso,
+.agenda__erro p {
+  margin: 0;
+}
+
+.agenda__aviso,
+.agenda__erro {
+  margin-bottom: 1rem;
+}
+
+.agenda__erro {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.agenda__itens {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agendamento {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.agendamento p {
+  margin: 0;
+}
+
+.agendamento__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.agendamento__topo h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.agendamento__quando {
+  color: var(--cor-texto-suave);
+  font-weight: 700;
+}
+
+.agendamento .botao {
+  justify-self: start;
+  margin-top: 0.4rem;
+}
+
+.agendamento--cancelado {
+  background: var(--cor-superficie-2);
+}
+
+.agendamento--esqueleto {
+  min-height: 8rem;
+}
+
+.agenda__vazio {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.agenda__vazio p {
+  margin: 0;
+  font-weight: 700;
+}

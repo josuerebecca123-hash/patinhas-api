@@ -15,3 +15,13 @@ export function formatarDuracao(minutos: number): string {
   if (horas === 0) return `${resto} min`;
   return resto === 0 ? `${horas}h` : `${horas}h ${resto}min`;
 }
+
+/** "2026-10-25T14:30:00-03:00" -> "25/10/2026 14:30" (no fuso do navegador) */
+export function formatarDataHora(iso: string): string {
+  return new Date(iso).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
+}
+
+/** só a hora: "14:30" */
+export function formatarHora(iso: string): string {
+  return new Date(iso).toLocaleTimeString("pt-BR", { timeStyle: "short" });
+}

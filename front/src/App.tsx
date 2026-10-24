@@ -3,7 +3,10 @@
 
 import { Route, Routes } from "react-router";
 import Layout from "./componentes/Layout";
+import RotaProtegida from "./componentes/RotaProtegida";
 import { useSessao } from "./sessao";
+import Agendamentos from "./paginas/Agendamentos";
+import Login from "./paginas/Login";
 import Vitrine from "./paginas/Vitrine";
 
 // PROVISÓRIO: só a rota "*" ainda usa isto. Será trocada pela página
@@ -24,6 +27,13 @@ export default function App() {
       {/* Todas as páginas ficam dentro do Layout (cabeçalho + rodapé) */}
       <Route element={<Layout />}>
         <Route path="/" element={<Vitrine />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Só com sessão: sem login, manda para /login e volta depois */}
+        <Route element={<RotaProtegida />}>
+          <Route path="/agendamentos" element={<Agendamentos />} />
+        </Route>
+
         <Route path="*" element={<Provisoria titulo="Página não encontrada" />} />
       </Route>
     </Routes>
