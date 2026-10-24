@@ -4,9 +4,10 @@
 import { Route, Routes } from "react-router";
 import Layout from "./componentes/Layout";
 import { useSessao } from "./sessao";
+import Vitrine from "./paginas/Vitrine";
 
-// PROVISÓRIO: só para testar o router, o layout e a sessão. Será trocado pela
-// página pública (Vitrine) e pela página "não encontrada" de verdade.
+// PROVISÓRIO: só a rota "*" ainda usa isto. Será trocada pela página
+// "não encontrada" de verdade.
 function Provisoria({ titulo }: { titulo: string }) {
   const { sessao } = useSessao();
   return (
@@ -22,7 +23,7 @@ export default function App() {
     <Routes>
       {/* Todas as páginas ficam dentro do Layout (cabeçalho + rodapé) */}
       <Route element={<Layout />}>
-        <Route path="/" element={<Provisoria titulo="Patinhas: vitrine em construção" />} />
+        <Route path="/" element={<Vitrine />} />
         <Route path="*" element={<Provisoria titulo="Página não encontrada" />} />
       </Route>
     </Routes>

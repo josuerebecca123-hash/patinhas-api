@@ -1,6 +1,7 @@
 /* src/index.css
-   Identidade Patinhas: 3 cores (verde-azulado, laranja, creme) + marrom do texto.
-   TODAS as cores ficam em variáveis aqui; o tema escuro só redefine as variáveis. */
+   Identidade Patinhas: rosa (principal), amarelo-manteiga (destaque) e creme rosado (fundo),
+   com ameixa escura no texto. TODAS as cores ficam em variáveis aqui;
+   o tema escuro só redefine as variáveis. */
 
 :root {
   color-scheme: light;
@@ -9,21 +10,25 @@
   --fonte-texto: "Nunito", system-ui, sans-serif;
 
   /* superfícies e texto */
-  --cor-fundo: #fff8ee;
+  --cor-fundo: #fff5f7;
   --cor-superficie: #ffffff;
-  --cor-superficie-2: #fdf0dc;
-  --cor-texto: #2b2118;
-  --cor-texto-suave: #6b5b4d;
-  --cor-borda: #e7d9c4;
+  --cor-superficie-2: #ffe8ee;
+  --cor-texto: #3a2430;
+  --cor-texto-suave: #6f5560;
+  --cor-borda: #f3cfd9;
 
   /* marca */
-  --cor-primaria: #1f7a80;
-  --cor-primaria-hover: #17606a;
+  --cor-primaria: #c2255c;
+  --cor-primaria-hover: #9f1a49;
   --cor-sobre-primaria: #ffffff;
-  --cor-destaque: #f28c28;
-  --cor-sobre-destaque: #2b2118;
-  --cor-preco: #b54708;
-  --cor-foco: #1f7a80;
+  --cor-destaque: #ffbe55;
+  --cor-sobre-destaque: #3a2430;
+  --cor-preco: #a61e4d;
+  --cor-foco: #c2255c;
+
+  /* faixa de abertura da página pública (tom claro) */
+  --cor-faixa: #ffd9e4;
+  --cor-sobre-faixa: #3a2430;
 
   /* estados */
   --cor-perigo: #b42318;
@@ -31,17 +36,17 @@
   --cor-sobre-perigo: #ffffff;
   --cor-ok-fundo: #dff3ea;
   --cor-ok-texto: #14633f;
-  --cor-erro-fundo: #fde4e1;
+  --cor-erro-fundo: #fde0dc;
   --cor-erro-texto: #9b1c1c;
-  --cor-info-fundo: #e0f0f2;
-  --cor-info-texto: #17575c;
+  --cor-info-fundo: #f1e4fb;
+  --cor-info-texto: #5b2a86;
 
   /* esqueleto, sombras, fundo do diálogo */
-  --cor-esqueleto: #eadfce;
-  --cor-esqueleto-brilho: #f7eee0;
-  --sombra: 0 2px 10px rgb(43 33 24 / 0.08);
-  --sombra-forte: 0 8px 24px rgb(43 33 24 / 0.16);
-  --cor-fundo-modal: rgb(43 33 24 / 0.55);
+  --cor-esqueleto: #f4dbe3;
+  --cor-esqueleto-brilho: #fbeaf0;
+  --sombra: 0 2px 10px rgb(120 40 70 / 0.1);
+  --sombra-forte: 0 8px 24px rgb(120 40 70 / 0.18);
+  --cor-fundo-modal: rgb(58 36 48 / 0.55);
 
   --raio: 14px;
 }
@@ -49,20 +54,23 @@
 [data-tema="escuro"] {
   color-scheme: dark;
 
-  --cor-fundo: #1b1612;
-  --cor-superficie: #261f19;
-  --cor-superficie-2: #30271f;
-  --cor-texto: #f4ebe0;
-  --cor-texto-suave: #c2b19f;
-  --cor-borda: #3f3429;
+  --cor-fundo: #1f1419;
+  --cor-superficie: #2a1b23;
+  --cor-superficie-2: #35232d;
+  --cor-texto: #fbe9ef;
+  --cor-texto-suave: #cfb3be;
+  --cor-borda: #4a3340;
 
-  --cor-primaria: #4fc0c6;
-  --cor-primaria-hover: #7bd3d8;
-  --cor-sobre-primaria: #0f2a2c;
-  --cor-destaque: #ffa94d;
-  --cor-sobre-destaque: #2b2118;
-  --cor-preco: #ffb366;
-  --cor-foco: #7bd3d8;
+  --cor-primaria: #ff8fb1;
+  --cor-primaria-hover: #ffb0c8;
+  --cor-sobre-primaria: #3a0f20;
+  --cor-destaque: #ffd27a;
+  --cor-sobre-destaque: #3a2430;
+  --cor-preco: #ff9fbb;
+  --cor-foco: #ffb0c8;
+
+  --cor-faixa: #4a2536;
+  --cor-sobre-faixa: #ffe3ec;
 
   --cor-perigo: #f0857d;
   --cor-perigo-hover: #f5a39d;
@@ -71,11 +79,11 @@
   --cor-ok-texto: #8fe0b6;
   --cor-erro-fundo: #43201d;
   --cor-erro-texto: #ffb3ac;
-  --cor-info-fundo: #17393c;
-  --cor-info-texto: #9fdfe3;
+  --cor-info-fundo: #3a2750;
+  --cor-info-texto: #dcc4f5;
 
-  --cor-esqueleto: #3a2f26;
-  --cor-esqueleto-brilho: #4a3d31;
+  --cor-esqueleto: #3e2a35;
+  --cor-esqueleto-brilho: #4f3643;
   --sombra: 0 2px 10px rgb(0 0 0 / 0.35);
   --sombra-forte: 0 8px 24px rgb(0 0 0 / 0.5);
   --cor-fundo-modal: rgb(0 0 0 / 0.65);
@@ -214,7 +222,7 @@ svg {
   width: 1.9rem;
   height: 1.9rem;
   flex: none;
-  color: var(--cor-destaque);
+  color: var(--cor-primaria);
 }
 
 .menu {

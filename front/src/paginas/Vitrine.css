@@ -1,0 +1,324 @@
+/* src/paginas/Vitrine.css
+   Só usa as variáveis do index.css, então o tema escuro funciona sozinho. */
+
+/* ---------- faixa de abertura ---------- */
+
+.abertura {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: 2rem 1.25rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-faixa);
+  color: var(--cor-sobre-faixa);
+}
+
+.abertura__texto {
+  position: relative;
+  z-index: 1;
+  max-width: 32rem;
+}
+
+.abertura h1 {
+  margin-bottom: 0.75rem;
+}
+
+.abertura p {
+  font-size: 1.1rem;
+}
+
+.abertura__patinha {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -2rem;
+  width: 12rem;
+  height: 12rem;
+  color: var(--cor-primaria);
+  opacity: 0.2;
+  transform: rotate(-14deg);
+}
+
+/* símbolos soltos na faixa (coração, osso, bolhas) */
+.simbolo {
+  position: absolute;
+  color: var(--cor-primaria);
+  opacity: 0.4;
+}
+
+.simbolo--coracao {
+  top: 1rem;
+  right: 1.2rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  transform: rotate(12deg);
+}
+
+.simbolo--osso {
+  top: 42%;
+  right: 38%;
+  width: 3rem;
+  height: 3rem;
+  transform: rotate(-28deg);
+}
+
+.simbolo--bolhas {
+  right: 5rem;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+}
+
+@media (max-width: 699px) {
+  .simbolo--osso {
+    display: none;
+  }
+}
+
+@media (min-width: 700px) {
+  .abertura {
+    padding: 3rem 2.5rem;
+  }
+
+  .abertura__patinha {
+    right: 1.5rem;
+    bottom: -1.5rem;
+    width: 17rem;
+    height: 17rem;
+  }
+
+  .simbolo--coracao {
+    top: 1.5rem;
+    right: 21rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .simbolo--osso {
+    top: 2.5rem;
+    right: 8rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .simbolo--bolhas {
+    right: 22rem;
+    bottom: 1.5rem;
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* ---------- busca ---------- */
+
+.vitrine {
+  scroll-margin-top: 1rem;
+}
+
+.busca {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.busca__acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (min-width: 560px) {
+  .busca {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+}
+
+.vitrine__contagem {
+  margin-bottom: 0.75rem;
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.vitrine__aviso {
+  margin-bottom: 1rem;
+}
+
+.vitrine__erro {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.vitrine__erro p {
+  margin: 0;
+}
+
+/* ---------- grade e cards ---------- */
+
+.vitrine__grade {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+}
+
+.servico {
+  min-width: 0;
+}
+
+.servico__corpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  height: 100%;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.servico__corpo:hover {
+  transform: translateY(-3px);
+  border-color: var(--cor-primaria);
+  box-shadow: var(--sombra-forte);
+}
+
+.servico__corpo:focus-within {
+  outline: 3px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+.servico__icone {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--cor-superficie-2);
+  color: var(--cor-preco);
+}
+
+.servico__icone svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.servico__nome {
+  margin: 0.25rem 0 0;
+  font-size: 1.2rem;
+}
+
+/* o link cobre o card inteiro, então o card todo é clicável */
+.servico__nome a {
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.servico__nome a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--raio);
+}
+
+.servico__nome a:focus-visible {
+  outline: none;
+}
+
+.servico__descricao {
+  display: -webkit-box;
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+  color: var(--cor-texto-suave);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.servico__rodape {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: auto 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--cor-borda);
+}
+
+.servico__preco {
+  color: var(--cor-preco);
+  font-family: var(--fonte-titulo);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.servico__duracao {
+  color: var(--cor-texto-suave);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* ---------- esqueleto com a forma do card ---------- */
+
+.servico--esqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 15rem;
+}
+
+.esq--icone {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.esq--titulo {
+  width: 70%;
+  height: 1.3rem;
+  margin-top: 0.2rem;
+}
+
+.esq--linha {
+  height: 0.9rem;
+}
+
+.esq--curta {
+  width: 55%;
+}
+
+.esq--preco {
+  width: 40%;
+  height: 1.6rem;
+  margin-top: auto;
+}
+
+/* ---------- vazio e paginação ---------- */
+
+.vazio {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+
+.vazio p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  font-weight: 700;
+}
