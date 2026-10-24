@@ -1,0 +1,35 @@
+/* src/paginas/Autenticacao.css
+   Usado pelo login e, depois, pelo cadastro. Só variáveis do index.css. */
+
+.autenticacao {
+  max-width: 26rem;
+  margin: 1rem auto 0;
+}
+
+.autenticacao__intro {
+  color: var(--cor-texto-suave);
+}
+
+.autenticacao .alerta p {
+  margin: 0;
+}
+
+.autenticacao__rodape {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.mostrar-senha {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mostrar-senha input {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--cor-primaria);
+}
