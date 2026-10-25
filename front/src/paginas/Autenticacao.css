@@ -33,3 +33,40 @@
   height: 1.2rem;
   accent-color: var(--cor-primaria);
 }
+
+/* ---------- medidor de força da senha (cadastro) ---------- */
+
+.forca {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+}
+
+.forca__barra {
+  flex: 1;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--cor-borda);
+}
+
+.forca[data-nivel="1"] .forca__barra:nth-child(-n + 1) {
+  background: var(--cor-perigo);
+}
+
+.forca[data-nivel="2"] .forca__barra:nth-child(-n + 2) {
+  background: var(--cor-destaque);
+}
+
+.forca[data-nivel="3"] .forca__barra:nth-child(-n + 3),
+.forca[data-nivel="4"] .forca__barra:nth-child(-n + 4) {
+  background: var(--cor-ok-texto);
+}
+
+.forca__rotulo {
+  min-height: 1.3em;
+}
+
+.campo .campo__erro {
+  color: var(--cor-erro-texto);
+  font-weight: 700;
+}
