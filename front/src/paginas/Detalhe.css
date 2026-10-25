@@ -1,0 +1,91 @@
+/* src/paginas/Detalhe.css
+   Só variáveis do index.css. O esqueleto usa as classes .esqueleto e .esq--* do Vitrine.css. */
+
+.detalhe {
+  display: grid;
+  gap: 1rem;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.detalhe > * {
+  min-width: 0;
+}
+
+.detalhe p {
+  margin: 0;
+}
+
+.detalhe__voltar {
+  justify-self: start;
+  font-weight: 700;
+}
+
+.detalhe__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.detalhe__topo h1 {
+  margin: 0;
+}
+
+.detalhe__descricao {
+  max-width: 60ch;
+  color: var(--cor-texto-suave);
+  font-size: 1.1rem;
+}
+
+.detalhe__dados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+}
+
+.detalhe__dados > div {
+  flex: 1 1 9rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  background: var(--cor-superficie-2);
+}
+
+.detalhe__dados dt {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.detalhe__dados dd {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.detalhe__preco {
+  color: var(--cor-preco);
+}
+
+.detalhe__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.detalhe--vazio {
+  justify-items: start;
+}
+
+.detalhe--esqueleto {
+  min-height: 14rem;
+  align-content: start;
+}
+
+.detalhe__erro {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
