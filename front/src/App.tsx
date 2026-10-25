@@ -6,7 +6,9 @@ import Layout from "./componentes/Layout";
 import RotaProtegida from "./componentes/RotaProtegida";
 import { useSessao } from "./sessao";
 import Agendamentos from "./paginas/Agendamentos";
+import Cadastro from "./paginas/Cadastro";
 import Login from "./paginas/Login";
+import ServicoDetalhe from "./paginas/ServicoDetalhe";
 import Vitrine from "./paginas/Vitrine";
 
 // PROVISÓRIO: só a rota "*" ainda usa isto. Será trocada pela página
@@ -27,7 +29,9 @@ export default function App() {
       {/* Todas as páginas ficam dentro do Layout (cabeçalho + rodapé) */}
       <Route element={<Layout />}>
         <Route path="/" element={<Vitrine />} />
+        <Route path="/servicos/:id" element={<ServicoDetalhe />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
 
         {/* Só com sessão: sem login, manda para /login e volta depois */}
         <Route element={<RotaProtegida />}>
