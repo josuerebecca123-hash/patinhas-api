@@ -44,6 +44,8 @@ export default function Agendamentos() {
 
   const [params, setParams] = useSearchParams();
   const pagina = lerPagina(params.get("pagina"));
+  // vindo do detalhe do serviço: /agendamentos?servico=3 já deixa o serviço escolhido
+  const servicoSugerido = params.get("servico") ?? "";
 
   // ----- lista de agendamentos -----
   const [estado, setEstado] = useState<Estado | null>(null);
@@ -178,7 +180,14 @@ export default function Agendamentos() {
 
           <div className="campo">
             <label htmlFor="servicoId">Serviço</label>
-            <select id="servicoId" name="servicoId" required disabled={!servicos || enviando} defaultValue="">
+            <select
+              key={servicos ? "pronto" : "carregando"}
+              id="servicoId"
+              name="servicoId"
+              required
+              disabled={!servicos || enviando}
+              defaultValue={servicoSugerido}
+            >
               <option value="">{servicos ? "Escolha um serviço" : "Carregando serviços…"}</option>
               {servicos?.map((s) => (
                 <option key={s.id} value={s.id}>
