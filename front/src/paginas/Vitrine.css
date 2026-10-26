@@ -87,22 +87,40 @@
     height: 17rem;
   }
 
+  /* telas médias: só o coração, no canto, acima da patinha */
+  .simbolo--coracao {
+    top: 1.2rem;
+    right: 1.5rem;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .simbolo--osso,
+  .simbolo--bolhas {
+    display: none;
+  }
+}
+
+/* telas largas: os símbolos ficam no espaço livre entre o texto e a patinha */
+@media (min-width: 1100px) {
   .simbolo--coracao {
     top: 1.5rem;
-    right: 21rem;
+    right: 20rem;
     width: 3rem;
     height: 3rem;
   }
 
   .simbolo--osso {
-    top: 2.5rem;
-    right: 8rem;
+    display: block;
+    top: 44%;
+    right: 23rem;
     width: 4rem;
     height: 4rem;
   }
 
   .simbolo--bolhas {
-    right: 22rem;
+    display: block;
+    right: 19rem;
     bottom: 1.5rem;
     width: 4rem;
     height: 4rem;

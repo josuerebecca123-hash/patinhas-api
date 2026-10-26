@@ -1,6 +1,7 @@
 // src/paginas/Agendamentos.tsx
 // Página protegida: marcar um horário (POST) e ver/cancelar os agendamentos.
 // Erros da API aparecem na tela: 400 (lista de validação) e 409 (horário ocupado).
+// Cancelar pede confirmação num <dialog> e o resultado sai num toast.
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router";
@@ -15,6 +16,8 @@ import {
   type Pagina,
   type Servico,
 } from "../api";
+import DialogoConfirmar from "../componentes/DialogoConfirmar";
+import { useToasts } from "../componentes/Toasts";
 import { formatarDataHora, formatarDuracao, formatarHora, formatarPreco } from "../formato";
 import { usarTitulo } from "../usarTitulo";
 import "./Agenda.css";
@@ -42,6 +45,7 @@ function agoraParaInput(): string {
 export default function Agendamentos() {
   usarTitulo("Agendamentos");
 
+  const toast = useToasts();
   const [params, setParams] = useSearchParams();
   const pagina = lerPagina(params.get("pagina"));
   // vindo do detalhe do serviço: /agendamentos?servico=3 já deixa o serviço escolhido
@@ -80,11 +84,15 @@ export default function Agendamentos() {
     return () => controle.abort();
   }, []);
 
-  // ----- formulário e ações -----
+  // ----- formulário -----
   const [errosForm, setErrosForm] = useState<string[]>([]);
   const [enviando, setEnviando] = useState(false);
   const [sucesso, setSucesso] = useState<string | null>(null);
-  const [erroLista, setErroLista] = useState<string | null>(null);
+
+  // ----- cancelar (com diálogo de confirmação) -----
+  // paraCancelar: o agendamento que a pessoa clicou (abre o diálogo)
+  // cancelando: id que está sendo cancelado na API (trava o diálogo)
+  const [paraCancelar, setParaCancelar] = useState<Agendamento | null>(null);
   const [cancelando, setCancelando] = useState<number | null>(null);
 
   async function marcar(e: FormEvent<HTMLFormElement>) {
@@ -122,18 +130,21 @@ export default function Agendamentos() {
     }
   }
 
-  async function cancelar(id: number) {
-    setErroLista(null);
+  async function confirmarCancelamento() {
+    if (!paraCancelar) return;
+    const id = paraCancelar.id;
+
     setSucesso(null);
     setCancelando(id);
     try {
       await api<Agendamento>(`/api/agendamentos/${id}/cancelar`, { metodo: "POST" });
-      setSucesso("Agendamento cancelado.");
-      setTentativa((t) => t + 1);
+      toast.sucesso("Horário cancelado.");
+      setTentativa((t) => t + 1); // recarrega a lista
     } catch (erro) {
-      setErroLista(mensagemDeErro(erro));
+      toast.erro(mensagemDeErro(erro));
     } finally {
       setCancelando(null);
+      setParaCancelar(null);
     }
   }
 
@@ -231,12 +242,6 @@ export default function Agendamentos() {
         <div className="agenda__lista">
           <h2>Seus horários</h2>
 
-          {erroLista && (
-            <p className="alerta alerta--erro agenda__aviso" role="alert">
-              {erroLista}
-            </p>
-          )}
-
           {carregando && (
             <>
               <p className="sr-only" role="status">
@@ -304,11 +309,10 @@ export default function Agendamentos() {
                       <button
                         type="button"
                         className="botao botao--secundario botao--pequeno"
-                        disabled={cancelando === a.id}
                         aria-label={`Cancelar ${a.servicoNome ?? "agendamento"} de ${a.nomeDoPet ?? "pet"} em ${formatarDataHora(a.dataHora)}`}
-                        onClick={() => cancelar(a.id)}
+                        onClick={() => setParaCancelar(a)}
                       >
-                        {cancelando === a.id ? "Cancelando…" : "Cancelar"}
+                        Cancelar
                       </button>
                     )}
                   </li>
@@ -342,6 +346,22 @@ export default function Agendamentos() {
           )}
         </div>
       </div>
+
+      <DialogoConfirmar
+        aberto={paraCancelar !== null}
+        titulo="Cancelar este horário?"
+        texto={
+          paraCancelar
+            ? `${paraCancelar.servicoNome ?? "Serviço"} para ${paraCancelar.nomeDoPet ?? "pet"}, ${formatarDataHora(paraCancelar.dataHora)}.`
+            : ""
+        }
+        rotuloSeguro="Manter horário"
+        rotuloConfirmar="Cancelar horário"
+        perigo
+        ocupado={cancelando !== null}
+        aoConfirmar={confirmarCancelamento}
+        aoFechar={() => setParaCancelar(null)}
+      />
     </section>
   );
 }

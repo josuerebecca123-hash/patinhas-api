@@ -11,7 +11,7 @@ import "./Autenticacao.css";
 
 // Para onde ir depois de entrar, quando a pessoa não veio de uma página protegida.
 // Troque por "/agendamentos" quando essa página existir.
-const DESTINO_PADRAO = "/";
+   const DESTINO_PADRAO = "/agendamentos";
 
 export default function Login() {
   usarTitulo("Entrar");
@@ -21,7 +21,8 @@ export default function Login() {
 
   // A rota protegida (próximos passos) manda a página de origem em state.de.
   const de = (location.state as { de?: unknown } | null)?.de;
-  const destino = typeof de === "string" && de.startsWith("/") ? de : DESTINO_PADRAO;
+const destino =
+  typeof de === "string" && de.startsWith("/") && !de.startsWith("//") ? de : DESTINO_PADRAO;
 
   const [erros, setErros] = useState<string[]>([]);
   const [enviando, setEnviando] = useState(false);

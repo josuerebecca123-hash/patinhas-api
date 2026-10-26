@@ -6,6 +6,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, Navigate } from "react-router";
 import { api, ApiError, mensagemDeErro, type RegistroEntrada, type Usuario } from "../api";
+import { useToasts } from "../componentes/Toasts";
 import { useSessao } from "../sessao";
 import { usarTitulo } from "../usarTitulo";
 import "./Autenticacao.css";
@@ -34,6 +35,7 @@ export default function Cadastro() {
   usarTitulo("Criar conta");
 
   const { sessao, entrar } = useSessao();
+  const toast = useToasts();
 
   const [senha, setSenha] = useState("");
   const [repeticao, setRepeticao] = useState("");
@@ -73,6 +75,7 @@ export default function Cadastro() {
     // Conta criada: entra direto. Com a sessão pronta, o <Navigate> acima leva à agenda.
     try {
       await entrar({ email, senha });
+      toast.sucesso("Conta criada. Bem-vindo(a)!");
     } catch (erro) {
       setErros([
         `Conta criada, mas não foi possível entrar automaticamente. ${mensagemDeErro(erro)} Tente pela página Entrar.`,

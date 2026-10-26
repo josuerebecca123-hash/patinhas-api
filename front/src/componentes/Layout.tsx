@@ -4,6 +4,7 @@
 
 import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import { useSessao } from "../sessao";
+import BotaoTema from "./BotaoTema";
 
 function Logo() {
   // Patinha simples; usa currentColor, então a cor vem do CSS (tema claro/escuro).
@@ -58,7 +59,7 @@ export default function Layout() {
           ) : (
             <NavLink to="/login">Entrar</NavLink>
           )}
-          {/* O botão de modo claro/escuro entra aqui, na etapa de acabamento. */}
+          <BotaoTema />
         </nav>
       </header>
 
