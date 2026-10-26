@@ -1,0 +1,76 @@
+/* src/componentes/Toasts.css
+   Só variáveis do index.css, então o tema escuro funciona sozinho. */
+
+.toasts {
+  position: fixed;
+  z-index: 200;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  pointer-events: none; /* a região não bloqueia cliques na página */
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 24rem;
+  padding: 0.75rem 0.5rem 0.75rem 1rem;
+  border-radius: 12px;
+  border-left: 6px solid currentColor;
+  box-shadow: var(--sombra-forte);
+  font-weight: 700;
+  pointer-events: auto;
+  animation: toast-entra 0.2s ease-out;
+}
+
+.toast--sucesso {
+  background: var(--cor-ok-fundo);
+  color: var(--cor-ok-texto);
+}
+
+.toast--erro {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro-texto);
+}
+
+.toast--info {
+  background: var(--cor-info-fundo);
+  color: var(--cor-info-texto);
+}
+
+.toast__texto {
+  flex: 1;
+  margin: 0;
+  padding-top: 0.15rem;
+}
+
+.toast__fechar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.toast__fechar:hover {
+  background: var(--cor-superficie-2);
+}
+
+@keyframes toast-entra {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}

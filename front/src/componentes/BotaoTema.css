@@ -1,0 +1,19 @@
+/* src/componentes/BotaoTema.css */
+
+.botao-tema {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+.botao-tema:hover {
+  background: var(--cor-superficie-2);
+}
