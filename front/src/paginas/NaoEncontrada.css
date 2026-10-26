@@ -1,0 +1,16 @@
+/* src/paginas/NaoEncontrada.css */
+
+.nao-encontrada {
+  max-width: 32rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.nao-encontrada__codigo {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(4rem, 20vw, 7rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cor-destaque);
+}

@@ -1,0 +1,133 @@
+/* src/paginas/AdminServicos.css
+   Só variáveis do index.css. Lista em cartões (não tabela): cabe em 360 px. */
+
+.admin__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.admin__topo h1 {
+  margin: 0;
+}
+
+.admin__aviso {
+  max-width: 32rem;
+  margin: 1rem auto;
+}
+
+.admin__form {
+  max-width: 36rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin__form h2 {
+  margin: 0;
+}
+
+.admin__linha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
+}
+
+.admin__acoes-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.admin__total {
+  margin: 0 0 0.75rem;
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.admin__itens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.admin-item--inativo {
+  opacity: 0.8;
+}
+
+.admin-item__topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.admin-item__topo h3 {
+  margin: 0;
+}
+
+.admin-item__descricao {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.admin-item__meta {
+  margin: 0;
+}
+
+.admin-item__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.etiqueta--inativo {
+  background: var(--cor-superficie-2);
+  color: var(--cor-texto-suave);
+}
+
+.admin__paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  font-weight: 600;
+}
+
+.admin__vazio {
+  max-width: 30rem;
+}
+
+/* esqueleto com a forma dos cartões */
+
+.adm-esq {
+  height: 1rem;
+  width: 100%;
+}
+
+.adm-esq--titulo {
+  height: 1.4rem;
+  width: 55%;
+}
+
+.adm-esq--curta {
+  width: 35%;
+}
+
+.admin-item .esqueleto + .esqueleto {
+  margin-top: 0.4rem;
+}
