@@ -25,3 +25,10 @@ export function formatarDataHora(iso: string): string {
 export function formatarHora(iso: string): string {
   return new Date(iso).toLocaleTimeString("pt-BR", { timeStyle: "short" });
 }
+
+/** "25/10/2026 14:30 até 15:30" ou, se passar da meia-noite, com a data do fim */
+export function formatarPeriodo(inicioIso: string, fimIso: string): string {
+  const mesmoDia = new Date(inicioIso).toDateString() === new Date(fimIso).toDateString();
+  const fim = mesmoDia ? formatarHora(fimIso) : formatarDataHora(fimIso);
+  return `${formatarDataHora(inicioIso)} até ${fim}`;
+}

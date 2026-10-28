@@ -18,8 +18,7 @@ import {
 } from "../api";
 import DialogoConfirmar from "../componentes/DialogoConfirmar";
 import { useToasts } from "../componentes/Toasts";
-import { formatarDataHora, formatarDuracao, formatarHora, formatarPreco } from "../formato";
-import { usarTitulo } from "../usarTitulo";
+import { formatarDataHora, formatarDuracao, formatarPeriodo, formatarPreco } from "../formato";import { usarTitulo } from "../usarTitulo";
 import "./Agenda.css";
 
 const TAMANHO = 5;
@@ -303,7 +302,7 @@ export default function Agendamentos() {
                       Pet: <strong>{a.nomeDoPet}</strong>
                     </p>
                     <p className="agendamento__quando">
-                      {formatarDataHora(a.dataHora)} até {formatarHora(a.dataHoraFim)}
+                     {formatarPeriodo(a.dataHora, a.dataHoraFim)}
                     </p>
                     {a.status === "Marcado" && (
                       <button
